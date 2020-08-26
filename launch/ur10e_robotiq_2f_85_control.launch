@@ -1,18 +1,31 @@
 <?xml version="1.0"?>
 <launch>
-	<arg name="limited" default="true"/>
+	<arg name="limited" default="false"/>
 
+    <!-- Establishes the connection with the UR controller -->
     <include file="$(find ur_robot_driver)/launch/ur10e_robotiq_2f_85_bringup.launch" >
     	<arg name="limited" value="false" />
     </include>
 
-    <include file="$(find ur5e_cam_2f85_moveit_config)/launch/ur5e_cam_2f85_moveit_planning_execution.launch" >
+    <!-- Establishes the connection with the simulated Robotiq Gripper -->
+    <include file="$(find robotiq_2f_gripper_sim_control)/launch/robotiq_action_server.launch" >
+    	<arg name="joint_name" value="finger_joint" />
+    </include>
+
+    <!-- Launches the moveit planning_context and move_group of the ur10e_robotiq_2f_85_robot -->
+    <include file="$(find ur10e_robotiq_2f_85_moveit_config)/launch/ur10e_robotiq_2f_85_moveit_planning_execution.launch" >
     	<arg name="limited" value="$(arg limited)" />
     </include>
 
+    <!-- Launches a RViz window -->
+    <include file="$(find ur10e_robotiq_2f_85_moveit_config)/launch/moveit_rviz.launch" >
+        <arg name="rviz_config" value="$(find ur10e_robotiq_2f_85_moveit_config)/launch/moveit.rviz"/>
+    </include>
+
+
+    <!-- Launches the wrappers that will handle user commands and forward the correct info to the UR controller -->
     <include file="$(find ur_control_wrapper)/launch/ur_control_wrapper.launch" >
-    	<arg name="simulator_mode" value="false" />
+    	<arg name="simulator_mode" value="true" />
     </include>
 
 </launch>
-

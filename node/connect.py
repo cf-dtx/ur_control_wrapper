@@ -26,7 +26,7 @@ class ExternalControl:
         
         mult_jointstate = 1000000
         servo_j_replace = "lookahead_time=0.03, gain=2000"
-        local_ip = "192.168.1.114" # may needs to be changed if your local host is with a different ip
+        local_ip = "192.168.1.99" # may needs to be changed if your local host is with a different ip
         reverse_port = 50001
         
         rospack = rospkg.RosPack()

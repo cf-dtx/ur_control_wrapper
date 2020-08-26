@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import numpy as np
+
 import rospy
 from std_msgs.msg import String, Bool
 from sensor_msgs.msg import JointState
@@ -57,7 +59,7 @@ class Demo:
         try:
             name = "box_object"
             pose = Pose(Point(-0.34, -0.0075, -0.023), Quaternion(0.0, 0.0, 0.0, 1.0))
-            size = Vector3(0.02, 0.02, 0.02)
+            size = Vector3(0.02, 0.02, 0.1)
             object_type = AddObjectRequest.TYPE_BOX
             response = add_box(name, pose, size, AddObjectRequest.TYPE_BOX).is_success
         except rospy.ServiceException as exc:
