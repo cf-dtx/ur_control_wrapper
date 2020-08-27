@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
 <launch>
 	<arg name="limited" default="false"/>
+    <arg name="control_gripper" default="false" />
+    <arg name="gripper_controller_name" default="" />
+
+    <!-- Establishes the connection with the simulated Robotiq Gripper -->
+    <!-- Needs to be launched first so the controller is accessible when launching the whole system-->
+    <include file="$(find robotiq_2f_gripper_sim_control)/launch/robotiq_action_server.launch" >
+    	<arg name="joint_name" value="finger_joint" />
+    </include>
 
     <!-- Establishes the connection with the UR controller -->
     <include file="$(find ur_robot_driver)/launch/ur10e_robotiq_2f_85_bringup.launch" >
     	<arg name="limited" value="false" />
-    </include>
-
-    <!-- Establishes the connection with the simulated Robotiq Gripper -->
-    <include file="$(find robotiq_2f_gripper_sim_control)/launch/robotiq_action_server.launch" >
-    	<arg name="joint_name" value="finger_joint" />
+        <arg name="control_gripper" value="false" />
+        <arg name="gripper_controller_name" value="" />
     </include>
 
     <!-- Launches the moveit planning_context and move_group of the ur10e_robotiq_2f_85_robot -->
